@@ -1,4 +1,4 @@
-code_katas
+Code Katas
 ==========
 
-Code Katas for my year of focused improvement.
+[Code Katas](http://codekata.pragprog.com/) for my year of focused improvement on being a software developer.
