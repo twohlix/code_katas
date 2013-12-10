@@ -5,7 +5,6 @@ def chop needle, haystack
   return -1 if !haystack.kind_of? Array # unnecessary according to spec
   return -1 if haystack.count == 0
 
-  pass = 0
   index_offset = 0
   while haystack.count > 0
     pivot_point = haystack.count / 2.0
@@ -53,5 +52,24 @@ class TestChop < Test::Unit::TestCase
     assert_equal(-1, chop(4, [1, 3, 5, 7]))
     assert_equal(-1, chop(6, [1, 3, 5, 7]))
     assert_equal(-1, chop(8, [1, 3, 5, 7]))
+  end
+end
+
+require 'benchmark'
+class TimeChop < Test::Unit::TestCase
+  def test_chop_speed
+    puts "Timing Chop"
+
+    n = 50000
+    Benchmark.bm(20) do |x|
+      x.report("empty:") {n.times do; chop(3, []);  end }
+      x.report("not present length 1:") {n.times do; chop(3, [1]); end }
+      x.report("first length 3:") {n.times do; chop(1, [1, 3, 5]); end }
+      x.report("last length 3:") {n.times do; chop(5, [1, 3, 5]); end }
+      x.report("not present length 3:") {n.times do; chop(0, [1, 3, 5]); end }
+      x.report("first length 5:") {n.times do; chop(1, [1, 3, 6, 9, 11]); end }
+      x.report("last length 5:") {n.times do; chop(11, [1, 3, 6, 9, 11]); end }
+      x.report("not present length 5:") {n.times do; chop(4, [1, 3, 6, 9, 11]); end }
+    end
   end
 end
