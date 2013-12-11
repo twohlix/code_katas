@@ -1,6 +1,27 @@
+# second implementation
+# recursive
+def chop needle, haystack, index_offset=0
+  return -1 if haystack.nil? # needed for certain slice returns
+  return -1 if haystack.count == 0
+
+  pivot_point = haystack.count / 2.0
+  pivot_point = pivot_point.floor
+  pivot_value = haystack[pivot_point]
+
+  # base case
+  return pivot_point+index_offset if pivot_value == needle
+
+  # upper half
+  if needle > pivot_value 
+    return chop needle, haystack.slice(pivot_point+1, pivot_point), index_offset+pivot_point+1
+  end
+
+  # lower half
+  chop needle, haystack.slice(0, pivot_point), index_offset
+end
 
 # first implementation
-def chop needle, haystack
+def first_chop needle, haystack
   return -1 if haystack.nil? # unnecessary according to spec
   return -1 if !haystack.kind_of? Array # unnecessary according to spec
   return -1 if haystack.count == 0
