@@ -60,4 +60,3 @@ data.each do |day, vals|
 end
 
 puts min_day
-
