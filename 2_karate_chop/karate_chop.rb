@@ -90,9 +90,15 @@ class TestChop < Test::Unit::TestCase
 
   def test_chops
     wrap method(:first_chop)
+    puts line_separator
     wrap method(:second_chop)
+    puts line_separator
     wrap method(:third_chop)
   end
+end
+
+def line_separator
+  '-'*65
 end
 
 require 'benchmark'
