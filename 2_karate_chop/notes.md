@@ -16,3 +16,10 @@ December 11, 2013 2am
 Making a recursive version of binary chop. Having a problem keeping the offset value right. Offset calculation was actually correct. I just had an off by one error on the length calculation for haystack.slice().
 
 This method required an extra argument to pass the index_offset around. Luckily ruby has default_values in the argument string. cleans it up  nicely. Also did not have to do inplace slice!. Although that might save memory usage. I would have to measure that though. That is outside this kata.
+
+December 11, 2013 630pm
+-----------------------
+I'm using a cheat, making chop a wrapper for ruby's array.index functionality. I'm looking at performance and it's about 2x faster my first two implementations.
+In every single way this method is faster than my binary searches and simpler to implement. Perhaps I should just trust the libraries.
+
+I also made a more flexible testing platform.
