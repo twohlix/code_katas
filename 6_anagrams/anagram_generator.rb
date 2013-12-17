@@ -11,8 +11,6 @@ end
 def list_generator args
   words_file = File.new(args[0], "r")
   anagrams = AnagramList.new
-
-  word_count = 0
   anagrams.add_words_from_file words_file
   words_file.close
 
@@ -30,7 +28,7 @@ def list_generator args
   end
   output_file.close
   
-  ap "Done! #{word_count} words used."
+  ap "Done! #{anagrams.word_count} words used."
   ap "#{anagram_sets_count} sets of anagrams found."
 end
 
