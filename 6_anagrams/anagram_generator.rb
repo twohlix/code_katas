@@ -1,4 +1,5 @@
 require "awesome_print"
+require_relative "anagram_list"
 
 def usage_check args
   if args.length < 2
@@ -10,19 +11,14 @@ end
 def high_memory_version args
   usage_check args
   words_file = File.new(args[0], "r")
-  anagrams = Hash.new
+  anagrams = AnagramList.new
 
   word_count = 0
   while (line = words_file.gets)
     word = line.strip
-    word.downcase!
     next if word.index("'") # get rid of possesives
-    
-    hash_key = word.chars.sort.join
-    # ap "#{args[0]}:#{$.}=#{hash_key} #{word}" if word == 'la' #debug
 
-    anagrams[hash_key] = Array.new unless anagrams.has_key? hash_key
-    anagrams[hash_key] << word unless anagrams[hash_key].include? word
+    anagrams.add_word word
 
     word_count += 1 #includes case duplicates
   end
@@ -30,9 +26,7 @@ def high_memory_version args
 
   output_file = File.new(args[1], "w")
   anagram_sets_count = 0
-  anagrams.each_value do |words|
-    next if words.length < 2
-
+  anagrams.all.each do |words|
     output_line = ''
     words.each do |word|
       output_line << ' ' if output_line.length > 0 
