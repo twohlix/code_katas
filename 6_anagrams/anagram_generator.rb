@@ -19,10 +19,12 @@ def high_memory_version args
     next if word.index("'") # get rid of possesives
     
     hash_key = word.chars.sort.join
-    anagrams[hash_key] = Array.new unless anagrams.has_key? hash_key
-    anagrams[hash_key] << word
+    # ap "#{args[0]}:#{$.}=#{hash_key} #{word}" if word == 'la' #debug
 
-    word_count += 1
+    anagrams[hash_key] = Array.new unless anagrams.has_key? hash_key
+    anagrams[hash_key] << word unless anagrams[hash_key].include? word
+
+    word_count += 1 #includes case duplicates
   end
   words_file.close
 
