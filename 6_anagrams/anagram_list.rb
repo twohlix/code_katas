@@ -3,7 +3,7 @@ class AnagramList
 
   def initialize word_list=nil
     @anagrams = Hash.new
-
+    @unique_words_added = 0
     add_words word_list
   end
 
@@ -11,7 +11,10 @@ class AnagramList
     the_key = hash_key word
 
     @anagrams[the_key] = Array.new unless @anagrams.has_key? the_key
-    @anagrams[the_key] << word unless @anagrams[the_key].include? word
+    unless @anagrams[the_key].include? word
+      @anagrams[the_key] << word
+      @unique_words_added += 1
+    end
   end
 
   def add_words word_list
@@ -23,6 +26,17 @@ class AnagramList
     end
 
     true
+  end
+
+  def add_words_from_file word_file
+    while (line = word_file.gets)
+      word = line.strip
+      add_word word
+    end
+  end
+
+  def word_count
+    @unique_words_added
   end
 
   # gets the anagrams of the given word, excluding itself (case-sensitive)

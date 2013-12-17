@@ -2,26 +2,18 @@ require "awesome_print"
 require_relative "anagram_list"
 
 def usage_check args
-  if args.length < 2
-    puts "usage: #{$0} input-file output-file"
+  if args.length < 1
+    puts "usage: #{$0} word-list [output-file]"
     exit 0
   end
 end
 
-def high_memory_version args
-  usage_check args
+def list_generator args
   words_file = File.new(args[0], "r")
   anagrams = AnagramList.new
 
   word_count = 0
-  while (line = words_file.gets)
-    word = line.strip
-    next if word.index("'") # get rid of possesives
-
-    anagrams.add_word word
-
-    word_count += 1 #includes case duplicates
-  end
+  anagrams.add_words_from_file words_file
   words_file.close
 
   output_file = File.new(args[1], "w")
@@ -42,4 +34,27 @@ def high_memory_version args
   ap "#{anagram_sets_count} sets of anagrams found."
 end
 
-high_memory_version ARGV
+def interactive_console args
+  words_file = File.new(args[0], "r")
+  anagrams = AnagramList.new
+  anagrams.add_words_from_file words_file
+  words_file.close
+  
+  ap "Added #{anagrams.word_count} words from #{args[0]}"
+
+  ap "type exit to stop"
+  user_input = ""
+  while user_input.downcase != "exit"
+    user_input = $stdin.gets.chomp
+    user_input = user_input.strip
+    words_anagrams = anagrams.anagrams_of user_input
+    ap "#{user_input}: #{words_anagrams.join(' ')}"
+  end
+end
+
+usage_check ARGV
+if ARGV.length < 2
+  interactive_console ARGV
+else
+  list_generator ARGV
+end
