@@ -1,5 +1,10 @@
 # currency converter 
 # take 3 arguments: amount, initial currency, conversion currency
+def usage
+  puts "usage: #{$0} amount initial_currency_code conversion_currency_code"
+  exit
+end
+usage unless ARGV.length == 3
 
 amount = ARGV[0].to_f
 initial_currency = ARGV[1].upcase
