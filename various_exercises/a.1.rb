@@ -1,13 +1,25 @@
 # take a single argument and calculate its factorial
 
-# recursive factorial
-def factorial(num)
-  return 1 if num == 1
+class Integer
+  def recursive_factorial
+    return 1 if self == 1
 
-  num * factorial(num-1)
+    self * (self-1).factorial
+  end
+
+  def iterative_factorial
+    answer = 1
+    for i in 1..self
+      answer *= i
+    end
+
+    answer
+  end
+
+  alias :factorial :iterative_factorial  #make 
 end
 
 to_factorial = ARGV[0].to_i 
-answer = factorial to_factorial
+answer = to_factorial.factorial
 
 puts "#{to_factorial}! = #{answer}"
