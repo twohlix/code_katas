@@ -16,7 +16,7 @@ class Integer
     answer
   end
 
-  alias :factorial :iterative_factorial  #make 
+  alias :factorial :iterative_factorial
 end
 
 to_factorial = ARGV[0].to_i 
